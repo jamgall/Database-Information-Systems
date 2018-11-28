@@ -1,0 +1,16 @@
+List the five least populated zip codes in Colorado
+
+db.restaurants.find({state: "CO"}).sort({pop: 1}).limit(5);
+
+
+List the zip code and population for three zip codes in Brooklyn
+
+db.restaurants.find({city:"BROOKLYN"}, {_id: 1, pop: 1}).limit(3);
+
+List the number of zip codes in California, Arizona and New Mexico
+
+db.restaurants.find({ $or: [ {state:"CA"}, {state:"AZ"}, {state: "NM"} ] } ).count()
+
+List the total population in each state
+
+db.restaurants.aggregate([{ $group : {_id: {state:"$state"}, poptotal:{$sum: "$pop"}}}]);
